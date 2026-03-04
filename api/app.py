@@ -15,6 +15,7 @@ FastAPI 应用工厂模块
     app = create_app()
 """
 
+import mimetypes
 import os
 from contextlib import asynccontextmanager
 from datetime import datetime
@@ -25,6 +26,11 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, HTMLResponse
+
+# Fix MIME types for JavaScript modules on Windows
+mimetypes.add_type("application/javascript", ".js")
+mimetypes.add_type("application/javascript", ".mjs")
+mimetypes.add_type("text/css", ".css")
 
 from api.v1 import api_v1_router
 from api.middlewares.auth import add_auth_middleware
